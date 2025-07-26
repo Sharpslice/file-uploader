@@ -14,7 +14,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model test {
+  id         Int          @id @default(autoincrement())
+  username   String       @unique
 
+  
+}
 
 
 
