@@ -4,13 +4,12 @@ import local from 'passport-local'
 const LocalStrategy = local.Strategy
 import bcrypt from 'bcryptjs'
 import {PrismaClient} from '../../generated/prisma'
-import {users} from '../../generated/prisma'
 import { Request, Response } from 'express';
 const prisma = new PrismaClient()
 const auth = express.Router()
 
 
-auth.post('signup', async(req:Request,res:Response)=>{
+auth.post('/signup', async(req:Request,res:Response)=>{
     const {username,password} = req.body;
 
     const hashPassword = await bcrypt.hash(password,10);
@@ -59,7 +58,6 @@ passport.deserializeUser(async(id:number,done)=>{
     try{
         const user = await prisma.users.findUnique({
             where :{id}
-
         })
         done(null,user)
     }catch(error:any){
@@ -67,4 +65,15 @@ passport.deserializeUser(async(id:number,done)=>{
     }
 })
 
+auth.post('/login',(req,res,next)=>{
+    passport.authenticate('localStrategy',(error:any,user: Express.User | false,info:String)=>{
+        req.logIn(user, (err: any) => {
+            if (err) {
+                return next(err);
+            }
+            return res.redirect('/profile');
+            });
+    })
+    (req,res,next);
+})
 export default auth;
