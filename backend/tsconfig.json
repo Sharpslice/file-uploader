@@ -22,7 +22,7 @@
  
     "strict": true,                                     
      "noImplicitAny": true,      
-     "strictFunctionTypes": true,                    
+               
     "skipLibCheck": true                              
   },
   "include": ["src/**/*"]

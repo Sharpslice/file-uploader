@@ -4,6 +4,7 @@ import local from 'passport-local'
 const LocalStrategy = local.Strategy
 import bcrypt from 'bcryptjs'
 import {PrismaClient} from '../../generated/prisma'
+import type {User} from '../../generated/prisma'
 import { Request, Response } from 'express';
 const prisma = new PrismaClient()
 const auth = express.Router()
@@ -51,6 +52,9 @@ passport.use(new LocalStrategy(async (username,password,done)=>{
     }
 }))
 
+passport.serializeUser((user: User,done)=>{
+    done(null,user.id)
+})
 
 
 export default auth;
