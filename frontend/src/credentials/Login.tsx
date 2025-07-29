@@ -10,8 +10,14 @@ function Login(){
     const onHandleClick = async(e: React.MouseEvent<HTMLElement>) =>{
         e.preventDefault()
         console.log(`${username}, ${password}`)
-
-        await axios.post('http://localhost:3000/auth/login',{username,password},{withCredentials:true})
+        try{
+            const response = await axios.post('http://localhost:3000/auth/login',{username,password},{withCredentials:true})
+            console.log(response.data.message)
+        }
+        catch(error: unknown){
+            console.log(error)
+        }
+        
     
     }
     return(
