@@ -32,7 +32,7 @@ function Login(){
             setValue={setPassword}
 
         />
-        <button onClick={onHandleClick}>sign up</button>
+        <button onClick={onHandleClick}>Log in</button>
 
 
     </form>

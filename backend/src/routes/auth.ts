@@ -1,7 +1,6 @@
 import express from 'express'
 import passport from 'passport'
-import local from 'passport-local'
-const LocalStrategy = local.Strategy
+import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcryptjs'
 import {PrismaClient} from '../../generated/prisma'
 import { Request, Response } from 'express';
@@ -75,12 +74,13 @@ auth.get('/checkauth',(req,res,next)=>{
     }
 })
 auth.post('/login',(req,res,next)=>{
-    passport.authenticate('localStrategy',(error:any,user: Express.User | false,info:String)=>{
+    passport.authenticate('local',(error:any,user: Express.User | false,info:String)=>{
         req.logIn(user, (err: any) => {
             if (err) {
+                console.log('login error')
                 return next(err);
             }
-            return res.redirect('/profile');
+            res.status(200).json({message:"success"});
             });
     })
     (req,res,next);
