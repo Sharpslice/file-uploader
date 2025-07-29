@@ -12,17 +12,19 @@ function App() {
    
   useEffect(()=>{
     const checkAuth = ()=>{
-      if(!isAuthenticated){
+      if(isAuthenticated === false){
         navigate('/login')
       }
     }
+    console.log(isAuthenticated)
     checkAuth();
-  })
+  },[isAuthenticated])
  
-  
- 
+  if(isAuthenticated === null) return null;
+
   return (
     <>
+      <div> main</div>
       <Outlet/>
     </>
   )

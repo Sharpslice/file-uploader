@@ -8,26 +8,27 @@ type AuthProviderProp={
 }
 
 type AuthContextType ={
-    isAuthenticated: boolean
-    setIsAuthenticated: (value: boolean) => void;
+    isAuthenticated: boolean | null
+    setIsAuthenticated: (value: boolean) => void ;
 }
 
 const AuthContext = createContext<AuthContextType | null> (null);
 function AuthProvider({children} :AuthProviderProp ){
 
     
-    const [isAuthenticated,setIsAuthenticated] = useState(false)
+    const [isAuthenticated,setIsAuthenticated] = useState<boolean | null>(null)
 
     useEffect(()=>{
         const checkAuth=async()=>{
             try{
                 const response = await axios.get('http://localhost:3000/auth/checkauth',{withCredentials:true})
-                console.log(response.data.message)
+                
                 setIsAuthenticated(true)
+                console.log(response.data.message)
             }
             catch(error: unknown){
                 console.error(error)
-                console.log('error')
+                console.log('authentification denied')
                 setIsAuthenticated(false)
                 
             }
@@ -36,7 +37,7 @@ function AuthProvider({children} :AuthProviderProp ){
         }
         
         checkAuth();
-    })
+    },[])
 
     return(
        <AuthContext.Provider value ={{isAuthenticated,setIsAuthenticated}}>
