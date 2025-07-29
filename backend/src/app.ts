@@ -17,7 +17,7 @@ app.use(session({
 
 }))
 app.use(passport.session());
-app.use('/',authRoute);
+app.use('/auth',authRoute);
 
 
 app.listen(3000,()=>{
