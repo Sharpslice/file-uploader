@@ -13,8 +13,9 @@ type AuthContextType ={
 }
 
 const AuthContext = createContext<AuthContextType | null> (null);
-
 function AuthProvider({children} :AuthProviderProp ){
+
+    
     const [isAuthenticated,setIsAuthenticated] = useState(false)
 
     useEffect(()=>{
@@ -22,11 +23,12 @@ function AuthProvider({children} :AuthProviderProp ){
             try{
                 const response = await axios.get('http://localhost:3000/auth/checkauth',{withCredentials:true})
                 console.log(response.data.message)
-                console.log('hi')
+                setIsAuthenticated(true)
             }
             catch(error: unknown){
                 console.error(error)
                 console.log('error')
+                setIsAuthenticated(false)
                 
             }
             
@@ -46,4 +48,4 @@ function AuthProvider({children} :AuthProviderProp ){
     )
 }
 
-export default AuthProvider;
+export  {AuthProvider,AuthContext};
