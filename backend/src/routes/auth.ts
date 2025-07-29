@@ -1,7 +1,6 @@
 import express from 'express'
 import passport from 'passport'
-import local from 'passport-local'
-const LocalStrategy = local.Strategy
+import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcryptjs'
 import {PrismaClient} from '../../generated/prisma'
 import { Request, Response } from 'express';
@@ -64,14 +63,24 @@ passport.deserializeUser(async(id:number,done)=>{
         done(error)
     }
 })
-
+auth.get('/checkauth',(req,res,next)=>{
+    if(req.isAuthenticated()){
+        console.log('user is authenticateed')
+        res.status(200).json({message:'authenticated'})
+    }
+    else{
+        res.status(500).json({message:"not authenticated"})
+        console.log('user not authenticated')
+    }
+})
 auth.post('/login',(req,res,next)=>{
-    passport.authenticate('localStrategy',(error:any,user: Express.User | false,info:String)=>{
+    passport.authenticate('local',(error:any,user: Express.User | false,info:String)=>{
         req.logIn(user, (err: any) => {
             if (err) {
+                console.log('login error')
                 return next(err);
             }
-            return res.redirect('/profile');
+            res.status(200).json({message:"success"});
             });
     })
     (req,res,next);
