@@ -1,8 +1,8 @@
-import { useState } from "react"
-import InputGroup from "../components/InputGroup"
 import axios from "axios";
+import InputGroup from "../components/InputGroup";
+import { useState } from "react";
 
-function Signup(){
+function Login(){
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
 
@@ -11,11 +11,9 @@ function Signup(){
         e.preventDefault()
         console.log(`${username}, ${password}`)
 
-        await axios.post('http://localhost:3000/auth/signup',{username,password},{withCredentials:true})
-        
-
+        await axios.post('http://localhost:3000/auth/login',{username,password},{withCredentials:true})
+    
     }
-
     return(
         
         <form>
@@ -41,7 +39,6 @@ function Signup(){
 
 
     )
-    
 }
 
-export default Signup
+export default Login;
