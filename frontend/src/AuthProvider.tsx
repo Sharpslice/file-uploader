@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import type {ReactNode} from 'react';
 
@@ -18,8 +19,20 @@ function AuthProvider({children} :AuthProviderProp ){
 
     useEffect(()=>{
         const checkAuth=async()=>{
-
+            try{
+                const response = await axios.get('http://localhost:3000/auth/checkauth',{withCredentials:true})
+                console.log(response.data.message)
+                console.log('hi')
+            }
+            catch(error: unknown){
+                console.error(error)
+                console.log('error')
+                
+            }
+            
+            
         }
+        
         checkAuth();
     })
 
