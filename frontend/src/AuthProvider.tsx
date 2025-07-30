@@ -9,7 +9,7 @@ type AuthProviderProp={
 
 type AuthContextType ={
     isAuthenticated: boolean | null
-    setIsAuthenticated: (value: boolean) => void ;
+    setIsAuthenticated: (value: boolean | null) => void ;
 }
 
 const AuthContext = createContext<AuthContextType | null> (null);

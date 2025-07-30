@@ -13,6 +13,10 @@ const route = createBrowserRouter([
       element: <Login/>
     },
     {
+      path:"/signup",
+      element: <Signup/>
+    },
+    {
       path:"/",
       element: <App/>,
       children:[
