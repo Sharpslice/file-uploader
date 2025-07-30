@@ -1,18 +1,20 @@
 import axios from "axios";
 import InputGroup from "../components/InputGroup";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login(){
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
 
-
+    const navigate = useNavigate();
     const onHandleClick = async(e: React.MouseEvent<HTMLElement>) =>{
         e.preventDefault()
         console.log(`${username}, ${password}`)
         try{
             const response = await axios.post('http://localhost:3000/auth/login',{username,password},{withCredentials:true})
             console.log(response.data.message)
+            navigate('/')
         }
         catch(error: unknown){
             console.log(error)
@@ -20,6 +22,12 @@ function Login(){
         
     
     }
+    const onSignupNavigate=(e: React.MouseEvent)=>{
+        e.preventDefault();
+        navigate('/signup')
+    }
+
+
     return(
         
         <form>
@@ -40,7 +48,7 @@ function Login(){
         />
         <button onClick={onHandleClick}>Log in</button>
 
-
+        <button onClick={onSignupNavigate}>Sign up</button>
     </form>
 
 

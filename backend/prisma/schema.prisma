@@ -21,6 +21,14 @@ model users {
   
 }
 
+model session {
+  id          String    @id @default(cuid())
+  sid         String    @unique
+  data        String
+  expiresAt   DateTime
+
+}
+
 
 
 
