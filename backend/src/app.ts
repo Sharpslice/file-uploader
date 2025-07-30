@@ -16,7 +16,7 @@ app.use(cors({
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: new PrismaSessionStore(
         new PrismaClient(),
         {
