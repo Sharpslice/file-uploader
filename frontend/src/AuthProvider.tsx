@@ -14,8 +14,6 @@ type AuthContextType ={
 
 const AuthContext = createContext<AuthContextType | null> (null);
 function AuthProvider({children} :AuthProviderProp ){
-
-    
     const [isAuthenticated,setIsAuthenticated] = useState<boolean | null>(null)
 
     useEffect(()=>{
