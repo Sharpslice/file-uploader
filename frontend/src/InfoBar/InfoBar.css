@@ -1,0 +1,36 @@
+.info-bar{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.info-bar__banner{
+    padding: 2rem;
+}
+
+.info-bar__button-container{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.info-bar__button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    all: unset;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    border-radius: 10px;
+    
+}
+.info-bar__button img{
+    width: 1rem;
+    height: 1rem;
+}
+.info-bar__button:hover{
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+}
