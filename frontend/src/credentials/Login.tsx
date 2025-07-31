@@ -7,7 +7,7 @@ import { AuthContext } from "../AuthProvider";
 function Login(){
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
-    const {setIsAuthenticated} = useContext(AuthContext)!;
+    const {isAuthenticated,setIsAuthenticated} = useContext(AuthContext)!;
     const navigate = useNavigate();
     const onHandleClick = async(e: React.MouseEvent<HTMLElement>) =>{
         e.preventDefault()
@@ -29,7 +29,7 @@ function Login(){
         navigate('/signup')
     }
 
-
+    if(isAuthenticated) { navigate('/')}
     return(
         
         <form>

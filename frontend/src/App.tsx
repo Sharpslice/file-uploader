@@ -2,30 +2,40 @@
 
 import { Outlet, useNavigate } from 'react-router-dom'
 import './App.css'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from './AuthProvider'
+import SideHeader from './SideHeader/SideHeader';
+import InfoBar from './InfoBar/InfoBar';
+import MainContainer from './MainContainer/MainContainer';
 
 function App() {
   const navigate = useNavigate();
   
   const  {isAuthenticated} = useContext(AuthContext)!
-   
+  const [isHidden, setIsHidden] = useState<boolean>(false);
   useEffect(()=>{
     const checkAuth = ()=>{
       if(isAuthenticated === false){
         navigate('/login')
       }
     }
-    console.log(isAuthenticated)
     checkAuth();
   },[isAuthenticated])
- 
+
   if(isAuthenticated === null) return null;
 
   return (
     <>
-      <div> main</div>
-      <Outlet/>
+   
+        <SideHeader setIsHidden={setIsHidden}/>
+   
+        <InfoBar isHidden ={isHidden}/>
+
+        <MainContainer
+          children = {<Outlet/>}
+        />
+          
+      
     </>
   )
 }
