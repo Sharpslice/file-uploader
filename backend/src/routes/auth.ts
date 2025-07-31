@@ -66,7 +66,7 @@ passport.deserializeUser(async(id:number,done)=>{
 auth.get('/checkauth',(req,res,next)=>{
     if(req.isAuthenticated()){
         console.log('user is authenticateed')
-        res.status(200).json({message:'authenticated'})
+        res.status(200).json({user: req.user,message:'authenticated'})
     }
     else{
         res.status(500).json({message:"not authenticated"})

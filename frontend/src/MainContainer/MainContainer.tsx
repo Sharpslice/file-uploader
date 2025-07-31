@@ -1,4 +1,5 @@
 import type {ReactNode} from 'react'
+import MainHeader from './MainHeader'
 
 type MainContainerProps ={
     children :ReactNode
@@ -7,6 +8,7 @@ type MainContainerProps ={
 function MainContainer({children}: MainContainerProps){
     return(
         <div className="main-container">
+            <MainHeader/>
             main
             {children}
         </div>
