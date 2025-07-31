@@ -2,12 +2,15 @@ import express, {Request,Response} from 'express';
 import session from 'express-session';
 import passport from 'passport'
 import auth from './routes/auth';
+import files from './routes/files';
 import cors from 'cors';
 
 import {PrismaSessionStore} from '@quixo3/prisma-session-store';
 import {PrismaClient} from '../generated/prisma';
+
 const app = express();
 const authRoute = auth;
+const fileRoute = files;
 app.use(express.json());
 app.use(cors({
     origin: "http://localhost:5173",
@@ -30,6 +33,7 @@ app.use(session({
 }))
 app.use(passport.session());
 app.use('/auth',authRoute);
+app.use('/files',fileRoute);
 
 
 app.listen(3000,()=>{
