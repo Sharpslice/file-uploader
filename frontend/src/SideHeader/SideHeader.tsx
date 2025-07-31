@@ -1,5 +1,15 @@
 import './SideHeader.css'
-function SideHeader(){
+import type { Dispatch, SetStateAction } from "react";
+type SideHeaderProps={
+    setIsHidden:  Dispatch<SetStateAction<boolean>>
+}
+function SideHeader({setIsHidden}: SideHeaderProps){
+
+    const onCollapseClick = ()=>{
+        console.log("collapse")
+        setIsHidden(prev =>!prev)
+    } 
+
     return(
         <div className='side-header'> 
 
@@ -26,7 +36,7 @@ function SideHeader(){
 
 
           <div className='side-panel__button'>
-              <button >
+              <button onClick={onCollapseClick}>
                   <img src="/assets/hide-sidebar-horiz.svg" alt="" />
               </button>
           </div>

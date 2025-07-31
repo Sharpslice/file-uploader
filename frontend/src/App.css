@@ -7,10 +7,11 @@
 
 }
 #root{
-    display: flex;
-    
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
 }
-.side-header{
-    border: 1px solid black;
-    
+
+
+.info-bar.hidden{
+    display: none;
 }
