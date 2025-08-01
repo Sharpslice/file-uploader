@@ -1,6 +1,7 @@
 import {useState, type ReactNode} from 'react'
 import MainHeader from './MainHeader'
 import axios from 'axios'
+import FilesList from './FilesList'
 
 type MainContainerProps ={
     children :ReactNode
@@ -41,6 +42,11 @@ function MainContainer({children}: MainContainerProps){
                 />
                 <button onClick={(e)=>onFormClick(e)}>upload</button>
             </form>
+
+
+
+
+            <FilesList/>
 
             {children}
         </div>
