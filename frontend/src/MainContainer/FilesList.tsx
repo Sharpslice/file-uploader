@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-
+import './FilesList.css'
 function FilesList(){
 
 
@@ -15,17 +15,22 @@ function FilesList(){
             
         }
         fetchFiles();
-    },[filesList])
+    },[])
 
 
 
     return(<>
-        {filesList.map((file)=>{
-            return (
-                <span>{file}</span>
-            )
-        })}
-    
+        <div className="file-list">
+            {filesList.map((file)=>{
+                return (
+                 <a key = {file} href={`http://localhost:3000/files/uploads/${file}.png`}>
+                    {file}
+                </a>
+                 )
+             })}
+            
+        </div>
+        
     </>)
 }
 

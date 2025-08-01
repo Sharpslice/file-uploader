@@ -11,7 +11,7 @@ const files = express.Router();
 const uploadsDirectory = path.join( __dirname,'..','..','uploads')
 
 const upload = multer({dest:uploadsDirectory})
-
+files.use('/uploads',express.static(uploadsDirectory))
 files.get('/directory',(req,res)=>{
     console.log('hello')
     fs.readdir(uploadsDirectory,(err,files)=>{
@@ -19,8 +19,7 @@ files.get('/directory',(req,res)=>{
             console.log('fail')
         }
             
-            
-            
+           
             console.log('success!')
         res.json({files,error:'none'})
     })
