@@ -23,7 +23,7 @@ function FilesList(){
         <div className="file-list">
             {filesList.map((file)=>{
                 return (
-                 <a key = {file} href={`http://localhost:3000/files/uploads/${file}.png`}>
+                 <a key = {file} href={`http://localhost:3000/files/uploads/${file}`}>
                     {file}
                 </a>
                  )

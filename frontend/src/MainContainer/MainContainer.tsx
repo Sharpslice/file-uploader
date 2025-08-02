@@ -46,7 +46,7 @@ function MainContainer({children}: MainContainerProps){
 
 
 
-            <FilesList/>
+            {/* <FilesList/> */}
 
             {children}
         </div>
