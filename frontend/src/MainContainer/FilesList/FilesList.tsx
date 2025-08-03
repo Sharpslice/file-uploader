@@ -23,14 +23,22 @@ function FilesList(){
         fetchFiles();
     },[authUser])
 
-
+    const convertToLegibleDate = (dateStr:string)=>{
+        return new Date(dateStr).toLocaleString()
+    }
+    const convertFileName = (fileStr:string) =>{
+        const splittedString = fileStr.split('/')
+        const keyWithoutFolder = splittedString[splittedString.length-1]
+        const splittedKey = keyWithoutFolder.split('-')
+        return splittedKey.pop()
+    }
 
     return(<>
         <div className="file-list">
             {filesList.map((file)=>{
                 return (
                     <div key={file.Key}> 
-                        {file.Key + file.LastModified}
+                        {convertFileName(file.Key) + convertToLegibleDate(file.LastModified)}
 
                     </div>
                  )
