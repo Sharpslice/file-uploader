@@ -51,7 +51,16 @@ async function getFileFromUsersBucket(prefix=""){
     try{
         const command = new ListObjectsV2Command(params);
         const data = await s3.send(command);
-        return data.Contents?.map(file=>file.Key)
+        console.log(data)
+        return data.Contents?.map(file=>{
+            return (
+                {
+                    Key: file.Key,
+                    LastModified:file.LastModified
+
+                }
+            )
+        })
         
     }catch(error){
 
@@ -61,7 +70,6 @@ async function getFileFromUsersBucket(prefix=""){
 
 files.get('/:username',async(req,res)=>{
     const username = req.params.username;
-
     const response = await getFileFromUsersBucket(`user-${username}`)
     res.json({files : response})
 })

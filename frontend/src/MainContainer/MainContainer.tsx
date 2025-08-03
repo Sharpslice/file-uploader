@@ -1,7 +1,7 @@
 import {useState, type ReactNode} from 'react'
 import MainHeader from './MainHeader'
 import axios from 'axios'
-import FilesList from './FilesList'
+import FilesList from './FilesList/FilesList'
 
 type MainContainerProps ={
     children :ReactNode
