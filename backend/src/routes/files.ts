@@ -7,7 +7,7 @@ import path from 'path';
 import fs from 'fs';
 import { Request } from 'express';
 import dotenv from 'dotenv'
-
+import {authenticatedRequest} from './auth'
 
 
 dotenv.config();
@@ -37,8 +37,8 @@ const upload = multer({
         bucket: process.env.AWS_BUCKET_NAME!,
         contentType: multerS3.AUTO_CONTENT_TYPE,
         
-        key:function(req,file,cb){
-            const unique = `${Date.now()}-${file.filename}`
+        key:function(req : authenticatedRequest,file,cb){
+            const unique = `user-${req.user.username}/${Date.now()}-${file.originalname}`
             cb(null,unique)
         }
 
