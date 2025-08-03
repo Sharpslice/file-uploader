@@ -7,6 +7,14 @@ import { Request, Response } from 'express';
 const prisma = new PrismaClient()
 const auth = express.Router()
 
+export interface User{
+    id: number
+    username: string
+}
+
+export interface authenticatedRequest extends Request{
+    user:User
+}
 
 auth.post('/signup', async(req:Request,res:Response)=>{
     const {username,password} = req.body;

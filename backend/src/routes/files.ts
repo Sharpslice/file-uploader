@@ -1,13 +1,11 @@
 import express from 'express'
 import multer from 'multer';
 import multerS3 from 'multer-s3';
-import { S3Client } from '@aws-sdk/client-s3'
+import { S3Client,ListObjectsV2Command, GetObjectCommand } from '@aws-sdk/client-s3'
+import {getSignedUrl} from '@aws-sdk/s3-request-presigner'
 
-import path from 'path';
-import fs from 'fs';
-import { Request } from 'express';
 import dotenv from 'dotenv'
-
+import {authenticatedRequest} from './auth'
 
 
 dotenv.config();
@@ -25,20 +23,17 @@ const s3 = new S3Client({
     }
    
     
-})
+}) 
 
 
-
-//const uploadsDirectory = path.join( __dirname,'..','..','uploads')
- //multer({dest:uploadsDirectory})
 const upload = multer({
     storage: multerS3({
         s3,
         bucket: process.env.AWS_BUCKET_NAME!,
         contentType: multerS3.AUTO_CONTENT_TYPE,
         
-        key:function(req,file,cb){
-            const unique = `${Date.now()}-${file.filename}`
+        key:function(req : authenticatedRequest,file,cb){
+            const unique = `user-${req.user.username}/${Date.now()}-${file.originalname}`
             cb(null,unique)
         }
 
@@ -46,23 +41,30 @@ const upload = multer({
 
     })
 })
-// files.use('/uploads',express.static(uploadsDirectory))
-// files.get('/directory',(req,res)=>{
-//     console.log('hello')
-//     fs.readdir(uploadsDirectory,(err,files)=>{
-//         if(err) {
-//             console.log('fail')
-//         }
-            
-           
-//             console.log('success!')
-//         res.json({files,error:'none'})
-//     })
-// })
 
 
+async function getFileFromUsersBucket(prefix=""){
+    const params = {
+        Bucket : process.env.AWS_BUCKET_NAME,
+        Prefix : prefix
+    }
+    try{
+        const command = new ListObjectsV2Command(params);
+        const data = await s3.send(command);
+        return data.Contents?.map(file=>file.Key)
+        
+    }catch(error){
+
+    }
+}
 
 
+files.get('/:username',async(req,res)=>{
+    const username = req.params.username;
+
+    const response = await getFileFromUsersBucket(`user-${username}`)
+    res.json({files : response})
+})
 
 files.post('/photo/upload',upload.single('random-file'),(req,res)=>{
     if (!req.file) {
@@ -73,6 +75,19 @@ files.post('/photo/upload',upload.single('random-file'),(req,res)=>{
     res.json({ message: 'Upload successful', file: req.file });
     
 })
+
+async function getPresignedUrl(key:string){
+    const command = new GetObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: key
+    })
+
+    const url =await getSignedUrl(s3,command,{expiresIn:3600});
+    return url
+}
+
+
+
 
 
 

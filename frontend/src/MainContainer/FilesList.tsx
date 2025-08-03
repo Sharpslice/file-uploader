@@ -1,21 +1,23 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import './FilesList.css'
+import { AuthContext } from "../AuthProvider";
 function FilesList(){
 
 
     const [filesList,setFilesList] = useState([]);
+    const {authUser} = useContext(AuthContext)!;
     useEffect(()=>{
         const fetchFiles = async()=>{
             
-            const response = await axios.get('http://localhost:3000/files/directory',{withCredentials:true})
+            const response = await axios.get(`http://localhost:3000/files/${authUser!.username}`,{withCredentials:true})
             console.log(response.data)
             setFilesList(response.data.files)
             
             
         }
         fetchFiles();
-    },[])
+    },[authUser])
 
 
 
@@ -23,9 +25,10 @@ function FilesList(){
         <div className="file-list">
             {filesList.map((file)=>{
                 return (
-                 <a key = {file} href={`http://localhost:3000/files/uploads/${file}`}>
-                    {file}
-                </a>
+                    <div key={file}> 
+                        {file}
+
+                    </div>
                  )
              })}
             
