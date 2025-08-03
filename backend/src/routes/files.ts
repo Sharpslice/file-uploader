@@ -42,6 +42,7 @@ const upload = multer({
     })
 })
 
+
 async function getFileFromUsersBucket(prefix=""){
     const params = {
         Bucket : process.env.AWS_BUCKET_NAME,
@@ -50,7 +51,8 @@ async function getFileFromUsersBucket(prefix=""){
     try{
         const command = new ListObjectsV2Command(params);
         const data = await s3.send(command);
-        console.log(data)
+        return data.Contents?.map(file=>file.Key)
+        
     }catch(error){
 
     }
@@ -60,7 +62,8 @@ async function getFileFromUsersBucket(prefix=""){
 files.get('/:username',async(req,res)=>{
     const username = req.params.username;
 
-    await getFileFromUsersBucket(`user-${username}`)
+    const response = await getFileFromUsersBucket(`user-${username}`)
+    res.json({files : response})
 })
 
 files.post('/photo/upload',upload.single('random-file'),(req,res)=>{
