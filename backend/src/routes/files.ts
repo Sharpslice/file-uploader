@@ -1,8 +1,8 @@
 import express from 'express'
 import multer from 'multer';
 import multerS3 from 'multer-s3';
-import { S3Client,ListObjectsV2Command } from '@aws-sdk/client-s3'
-
+import { S3Client,ListObjectsV2Command, GetObjectCommand } from '@aws-sdk/client-s3'
+import {getSignedUrl} from '@aws-sdk/s3-request-presigner'
 
 import dotenv from 'dotenv'
 import {authenticatedRequest} from './auth'
@@ -23,7 +23,7 @@ const s3 = new S3Client({
     }
    
     
-})
+}) 
 
 
 const upload = multer({
@@ -75,6 +75,19 @@ files.post('/photo/upload',upload.single('random-file'),(req,res)=>{
     res.json({ message: 'Upload successful', file: req.file });
     
 })
+
+async function getPresignedUrl(key:string){
+    const command = new GetObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: key
+    })
+
+    const url =await getSignedUrl(s3,command,{expiresIn:3600});
+    return url
+}
+
+
+
 
 
 
