@@ -33,14 +33,24 @@ function FilesList(){
         return splittedKey.pop()
     }
 
+    const onFileClick = (fileKey:string)=>{
+        console.log(fileKey)
+    }
+
     return(<>
         <div className="file-list">
+            {/* <div className="file-list__header">
+                <button>Name</button>
+                <button>Who Can access</button>
+                <button>Modified</button>
+            </div> */}
             {filesList.map((file)=>{
                 return (
-                    <div key={file.Key}> 
-                        {convertFileName(file.Key) + convertToLegibleDate(file.LastModified)}
-
-                    </div>
+                    <button className="file-tile" key={file.Key} onClick={()=>onFileClick(file.Key)}> 
+                        <div className="file-tile__file-name">{convertFileName(file.Key)} </div>
+                        <div className="file-tile__file-access">{authUser?.username}</div>
+                        <div className="file-tile__file-date">{convertToLegibleDate(file.LastModified)}</div>
+                    </button>
                  )
              })}
             

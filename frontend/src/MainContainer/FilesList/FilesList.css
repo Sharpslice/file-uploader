@@ -1,4 +1,29 @@
 .file-list{
+    
     display: flex;
     flex-direction: column;
+    padding: 2rem;
+}
+.file-tile{
+    all:unset;
+    display: flex;
+    width: 100%;
+    border-top: 1px solid black;
+    padding: 0.2rem 0rem;
+    background-color: rgba(255, 255, 255, 0);
+}
+.file-tile:hover{
+     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.file-tile:last-child{
+    border-bottom: 1px solid black;
+}
+.file-tile__file-name{
+     width: 70%; 
+    
+    cursor: pointer;
+}
+.file-tile__file-access{
+    width: 10%;
 }

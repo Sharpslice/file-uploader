@@ -18,3 +18,8 @@ body{
 .info-bar.hidden{
     display: none;
 }
+
+.main-container{
+   
+    flex: 1;
+}

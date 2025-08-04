@@ -31,7 +31,6 @@ function MainContainer({children}: MainContainerProps){
     return(
         <div className="main-container">
             <MainHeader/>
-            main
 
             <form>
                 <input 
