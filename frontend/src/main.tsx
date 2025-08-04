@@ -5,6 +5,7 @@ import App from './App.tsx'
 import Signup from './credentials/Signup.tsx'
 import Login from './credentials/Login.tsx'
 import {AuthProvider} from './AuthProvider.tsx'
+import {PreviewProvider} from './PreviewProvider.tsx'
 
 
 const route = createBrowserRouter([
@@ -31,7 +32,10 @@ const route = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router = {route}/>
+      <PreviewProvider>
+          <RouterProvider router = {route}/>
+      </PreviewProvider>
+      
     </AuthProvider>
     
   </StrictMode>
