@@ -7,6 +7,7 @@ import { AuthContext } from './AuthProvider'
 import SideHeader from './SideHeader/SideHeader';
 import InfoBar from './InfoBar/InfoBar';
 import MainContainer from './MainContainer/MainContainer';
+import PreviewWindow from './PreviewWindow/PreviewWindow';
 
 function App() {
   const navigate = useNavigate();
@@ -34,7 +35,8 @@ function App() {
         <MainContainer
           children = {<Outlet/>}
         />
-          
+        <PreviewWindow
+        />
       
     </>
   )
