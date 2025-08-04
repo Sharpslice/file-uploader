@@ -33,8 +33,9 @@ function FilesList(){
         return splittedKey.pop()
     }
 
-    const onFileClick = (fileKey:string)=>{
-        console.log(fileKey)
+    const onFileClick = async(fileKey:string)=>{
+        const response = await axios.get(`http://localhost:3000/files/${authUser?.username}/presigned/${encodeURIComponent(fileKey)}`,{withCredentials:true})
+        console.log(response.data.url)
     }
 
     return(<>

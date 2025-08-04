@@ -90,9 +90,19 @@ async function getPresignedUrl(key:string){
         Key: key
     })
 
-    const url =await getSignedUrl(s3,command,{expiresIn:3600});
+    const url =await getSignedUrl(s3,command,{expiresIn:60});
     return url
 }
+
+files.get('/:username/presigned/:fileKey(*)',async(req,res)=>{
+    
+    const {username, fileKey} = req.params;
+     console.log('username:', username);
+    console.log('fileKey:', fileKey);
+    console.log(fileKey)
+    const url = await getPresignedUrl(fileKey)
+    res.json({url})
+})
 
 
 
