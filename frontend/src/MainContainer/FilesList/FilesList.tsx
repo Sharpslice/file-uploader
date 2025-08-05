@@ -2,16 +2,19 @@ import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import './FilesList.css'
 import { AuthContext } from "../../AuthProvider";
+import { PreviewContext, type FileData } from "../../PreviewProvider";
 type s3File = {
     Key:string,
     LastModified: string,
 }
+
 
 function FilesList(){
 
 
     const [filesList,setFilesList] = useState<s3File[]>([]);
     const {authUser} = useContext(AuthContext)!;
+    const {setFileData} = useContext(PreviewContext)!;
     useEffect(()=>{
         const fetchFiles = async()=>{
             const response = await axios.get(`http://localhost:3000/files/${authUser!.username}`,{withCredentials:true})
@@ -33,23 +36,20 @@ function FilesList(){
         return splittedKey.pop()
     }
 
-    const onFileClick = async(fileKey:string)=>{
+    const onFileClick = async(fileData:FileData,fileKey:string)=>{
         const response = await axios.get(`http://localhost:3000/files/${authUser?.username}/presigned/${encodeURIComponent(fileKey)}`,{withCredentials:true})
         console.log(response.data.url)
+        console.log(fileData)
+        setFileData(fileData)
 
-        
     }
 
     return(<>
         <div className="file-list">
-            {/* <div className="file-list__header">
-                <button>Name</button>
-                <button>Who Can access</button>
-                <button>Modified</button>
-            </div> */}
+        
             {filesList.map((file)=>{
                 return (
-                    <button className="file-tile" key={file.Key} onClick={()=>onFileClick(file.Key)}> 
+                    <button className="file-tile" key={file.Key} onClick={()=>onFileClick(file,file.Key)}> 
                         <div className="file-tile__file-name">{convertFileName(file.Key)} </div>
                         <div className="file-tile__file-access">{authUser?.username}</div>
                         <div className="file-tile__file-date">{convertToLegibleDate(file.LastModified)}</div>

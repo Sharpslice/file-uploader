@@ -7,7 +7,11 @@ function PreviewWindow(){
     if(!fileData) return null
     return(
         <>
-            hello
+            <div>
+                Hello
+
+
+            </div>
         
         </>
     )

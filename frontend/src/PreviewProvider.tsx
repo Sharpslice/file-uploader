@@ -1,13 +1,10 @@
 import { createContext, useState } from "react"
 import type { Dispatch, SetStateAction } from "react";
+import type {FileData} from '../../shared/types/fileData'
 type PreviewProviderProp ={
     children: React.ReactNode
 }
-interface FileData{
-    fileName: string
-    fileType: string
-    presignedUrl : string
-}
+
 interface PreviewContextValue{
     fileData: FileData | null
     setFileData: Dispatch<SetStateAction<FileData | null>>;

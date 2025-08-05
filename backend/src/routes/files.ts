@@ -3,7 +3,6 @@ import multer from 'multer';
 import multerS3 from 'multer-s3';
 import { S3Client,ListObjectsV2Command, GetObjectCommand } from '@aws-sdk/client-s3'
 import {getSignedUrl} from '@aws-sdk/s3-request-presigner'
-
 import dotenv from 'dotenv'
 import {authenticatedRequest} from './auth'
 
@@ -25,6 +24,14 @@ const s3 = new S3Client({
     
 }) 
 
+interface FileData{
+    fileName: string
+    fileType: string | null
+    Key: string
+    LastModified:Date
+    presignedUrl : string | null
+}
+
 
 const upload = multer({
     storage: multerS3({
@@ -41,9 +48,12 @@ const upload = multer({
 
     })
 })
+const extractFileName = (s3Key: string): string => {
+  const match = s3Key.match(/\/(?:[^\/]+\/)*[^\/]*?-(.+\.[a-zA-Z0-9]+)$/);
+  return match?.[1] || 'unknown';
+};
 
-
-async function getFileFromUsersBucket(prefix=""){
+async function getFileFromUsersBucket(prefix=""):Promise<FileData[]>{
     const params = {
         Bucket : process.env.AWS_BUCKET_NAME,
         Prefix : prefix
@@ -52,18 +62,23 @@ async function getFileFromUsersBucket(prefix=""){
         const command = new ListObjectsV2Command(params);
         const data = await s3.send(command);
         console.log(data)
-        return data.Contents?.map(file=>{
+
+        if(!data.Contents || data.Contents.length ==0) return [];
+
+        return data.Contents.map((file): FileData=>{
             return (
                 {
-                    Key: file.Key,
-                    LastModified:file.LastModified
-
-                }
+                    fileName: extractFileName(file.Key!),
+                    fileType: file.Key?.split('.').pop()!,
+                    Key: file.Key!,
+                    LastModified:file.LastModified!,
+                    presignedUrl: null
+                }  
             )
         })
         
     }catch(error){
-
+        return []
     }
 }
 
