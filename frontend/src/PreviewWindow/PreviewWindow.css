@@ -1,15 +1,10 @@
 .preview-container{
-    
-    width: 30rem;
-}
-.preview-header{
-    display: flex;
-}
-.preview-info{
-    display: flex;
+    flex: 0 0 30%;
+    display: grid;
 }
 
-.preview-container img{
-    height: 20rem;
-    
+.preview-header{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
 }

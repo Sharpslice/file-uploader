@@ -1,4 +1,6 @@
 .info-bar{
+    flex: 0 0 5%;
+
     border: 1px solid black;
     display: flex;
     flex-direction: column;

@@ -1,13 +1,17 @@
 .side-header{
+    flex: 0 0 5%;
+    min-width: 0;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
     
     justify-content: space-between;
 
     padding: 1rem;
+}
+.side_header__main-nav{
+    flex:1
 }
 .side-header img{
     width: 2rem;

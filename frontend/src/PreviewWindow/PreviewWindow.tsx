@@ -14,17 +14,29 @@ function PreviewWindow(){
         <>
             <div className="preview-container">
                 <div className="preview-header">
-                    <button onClick={onCloseClick}>close</button>
-                    <div className="preview-info">
-                        <div>
-                            {fileData.fileName}
+
+                    <div className="preview-header__info">
+
+                        <button onClick={onCloseClick}>close</button>
+
+                        <div className="preview-info">
+                            <div>
+                                {fileData.fileName}
+                            </div>
+                            <div>
+                                {fileData.fileType}
+                            </div>
                         </div>
-                        <div>
-                            {fileData.fileType}
-                        </div>
+
                     </div>
+
+
+                    <div className="preview-header__action-bar">
+                        <button>download</button>
+                    </div>
+                    
                 </div>  
-                <img src={fileData.presignedUrl!} alt="" />
+                {/* <img src={fileData.presignedUrl!} alt="" /> */}
 
             </div>
         
