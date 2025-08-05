@@ -1,0 +1,15 @@
+.preview-container{
+    
+    width: 30rem;
+}
+.preview-header{
+    display: flex;
+}
+.preview-info{
+    display: flex;
+}
+
+.preview-container img{
+    height: 20rem;
+    
+}
