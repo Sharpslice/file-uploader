@@ -2,6 +2,6 @@ export interface FileData{
     fileName: string
     fileType: string | null
     Key: string
-    LastModified:string
+    LastModified:Date
     presignedUrl : string | null
 }
