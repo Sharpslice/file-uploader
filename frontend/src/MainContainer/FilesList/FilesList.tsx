@@ -36,10 +36,10 @@ function FilesList(){
 
     const onFileClick = async(fileData:FileData,fileKey:string)=>{
         const response = await axios.get(`http://localhost:3000/files/${authUser?.username}/presigned/${encodeURIComponent(fileKey)}`,{withCredentials:true})
-        console.log(response.data.url)
+        
         
         setFileData({...fileData,presignedUrl:response.data.url})
-
+        console.log(response.data.url)
     }
 
     return(<>

@@ -1,13 +1,30 @@
-import { useContext } from "react"
+import { useContext,useRef } from "react"
 import { PreviewContext } from "../PreviewProvider"
 import './PreviewWindow.css'
+import axios from "axios"
+import { AuthContext } from "../AuthProvider"
 function PreviewWindow(){
     const {fileData,setFileData} = useContext(PreviewContext)!
- 
+    const {authUser} = useContext(AuthContext)!
+
+    
+
     if(!fileData) return null
 
     const onCloseClick=()=>{
         setFileData(null)
+    }
+
+    const onDownloadClick=async()=>{
+        const response = await axios.get(`http://localhost:3000/files/${authUser?.username}/presigned/${fileData.Key}`,{responseType:'blob'})
+        const url = response.data.url
+        const link = document.createElement('a');
+        link.href= url
+        link.download = fileData.fileName
+        document.body.appendChild(link)
+        link.click();
+        document.body.removeChild(link)
+        
     }
 
     return(
@@ -26,7 +43,7 @@ function PreviewWindow(){
 
 
                 <div className="preview-header__bottom">
-                    <button>download</button>
+                    <button onClick={onDownloadClick}>Download</button>
                 </div>
                 
             </div> 

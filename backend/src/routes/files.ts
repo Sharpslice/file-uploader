@@ -99,10 +99,11 @@ files.post('/photo/upload',upload.single('random-file'),(req,res)=>{
     
 })
 
-async function getPresignedUrl(key:string){
+async function getPresignedUrl(key:string,download = false){
     const command = new GetObjectCommand({
         Bucket: process.env.AWS_BUCKET_NAME,
-        Key: key
+        Key: key,
+        ResponseContentDisposition: download?`attachment; filename="${extractFileName(key)}"`: undefined
     })
 
     const url =await getSignedUrl(s3,command,{expiresIn:60});
@@ -112,10 +113,11 @@ async function getPresignedUrl(key:string){
 files.get('/:username/presigned/:fileKey(*)',async(req,res)=>{
     
     const {username, fileKey} = req.params;
+    const {download} = req.query;
      console.log('username:', username);
     console.log('fileKey:', fileKey);
     console.log(fileKey)
-    const url = await getPresignedUrl(fileKey)
+    const url = await getPresignedUrl(fileKey,download ==='true')
     res.json({url})
 })
 
