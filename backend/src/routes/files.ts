@@ -114,6 +114,7 @@ files.get('/:username/presigned/:fileKey(*)',async(req,res)=>{
     
     const {username, fileKey} = req.params;
     const {download} = req.query;
+    console.log(download)
      console.log('username:', username);
     console.log('fileKey:', fileKey);
     console.log(fileKey)

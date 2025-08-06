@@ -16,7 +16,7 @@ function PreviewWindow(){
     }
 
     const onDownloadClick=async()=>{
-        const response = await axios.get(`http://localhost:3000/files/${authUser?.username}/presigned/${fileData.Key}`,{responseType:'blob'})
+        const response = await axios.get(`http://localhost:3000/files/${authUser?.username}/presigned/${fileData.Key}?download=true`)
         const url = response.data.url
         const link = document.createElement('a');
         link.href= url
@@ -24,6 +24,7 @@ function PreviewWindow(){
         document.body.appendChild(link)
         link.click();
         document.body.removeChild(link)
+        console.log(response.data.url)
         
     }
 
